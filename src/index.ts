@@ -1,6 +1,9 @@
 import dotenv from "dotenv";
+import cookieSession from "cookie-session"
 import express from "express";
 import path from "path";
+import * as sessionAuth from "./middleware/sessionAuth";
+import * as routes from "./routes";
 
 // initialize config
 dotenv.config();
@@ -11,11 +14,20 @@ const app = express();
 app.set( "views", path.join( __dirname, "views" ) );
 app.set( "view engine", "ejs" );
 
-// define a route handler for the default home page
-app.get( "/", ( req, res ) => {
-    // render the index template
-    res.render( "index" );
-} );
+
+app.use(cookieSession({
+    name: 'session',
+    secret: process.env.SESSION_SECRET,
+
+    // Cookie Options
+    maxAge: 24 * 60 * 60 * 1000 // 24 hours
+  }))
+
+// Configure session auth
+sessionAuth.register( app );
+
+// Configure routes
+routes.register( app );
 
 // start the express server
 app.listen( port, () => {

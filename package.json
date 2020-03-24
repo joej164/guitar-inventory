@@ -19,6 +19,8 @@
   "license": "ISC",
   "dependencies": {
     "@okta/oidc-middleware": "^1.0.2",
+    "@types/cookie-session": "^2.0.39",
+    "cookie-session": "^1.4.0",
     "dotenv": "^8.2.0",
     "ejs": "^3.0.1",
     "express": "^4.17.1",
